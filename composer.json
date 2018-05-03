@@ -1,0 +1,16 @@
+{
+    "name": "gio/wordpress-composer-setup",
+    "type": "composer-plugin",
+    "require": {
+        "composer-plugin-api": "^1.1"
+    },
+	"autoload": {
+		"psr-4": {
+			"Gio\\WordPress\\Setup\\": "src/"
+		}
+	},
+    "extra": {
+        "class": "Gio\\WordPress\\Setup\\Plugin",
+		"wordpress-install-dir": "wp-core"
+    }
+}

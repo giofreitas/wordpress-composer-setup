@@ -2,6 +2,7 @@
     "name": "giofreitas/wordpress-composer-setup",
     "type": "composer-plugin",
 	"description": "A composer plugin to setup your WordPress environment to be friends with composer.",
+	"license": "MIT",
 	"keywords": [
 		"wordpress",
 		"composer",

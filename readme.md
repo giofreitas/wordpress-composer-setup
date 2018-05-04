@@ -26,7 +26,7 @@ You can manually set the site url in extra (do not define if you want it to be d
 }
 ```
 
-We can also make use of some options from johnpbloch/wordpress-core-installer and composer/installers to change some default configurations:
+We can also make use of some options from [johnpbloch/wordpress-core-installer](https://github.com/johnpbloch/wordpress-core-installer) and [composer/installers](https://github.com/composer/installers) to change some default configurations:
 
 ```
 "extra": {
@@ -38,5 +38,3 @@ We can also make use of some options from johnpbloch/wordpress-core-installer an
     }
 }
 ```
-
-For more information visit [johnpbloch/wordpress-core-installer](https://github.com/johnpbloch/wordpress-core-installer) and [composer/installers](https://github.com/composer/installers).

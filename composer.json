@@ -1,6 +1,18 @@
 {
-    "name": "gio/wordpress-composer-setup",
+    "name": "giofreitas/wordpress-composer-setup",
     "type": "composer-plugin",
+	"description": "A composer plugin to setup your WordPress environment to be friends with composer.",
+	"keywords": [
+		"wordpress",
+		"composer",
+		"wp-config"
+	],
+	"authors": [
+		{
+			"name": "Gio Freitas",
+			"email": "giodefreitas@gmail.com"
+		}
+	],
     "require": {
         "composer-plugin-api": "^1.1"
     },
@@ -10,7 +22,9 @@
 		}
 	},
     "extra": {
-        "class": "Gio\\WordPress\\Setup\\Plugin",
-		"wordpress-install-dir": "wp-core"
-    }
+        "class": "Gio\\WordPress\\Setup\\Plugin"
+    },
+	"suggest": {
+		"johnpbloch/wordpress-core": "You need to install WordPress too"
+	}
 }

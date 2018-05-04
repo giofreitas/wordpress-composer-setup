@@ -1,6 +1,6 @@
 # wordpress-composer-setup
 A composer plugin to setup your WordPress environment to be friends with composer. 
-Make use of johnpbloch/wordpress package to get the WordPress files.
+It uses johnpbloch/wordpress package to install WordPress core files.
 
 ##### How?
 This plugin will create the wp-config.php file with the necessary definitions to let WordPress to be suitable with composer.

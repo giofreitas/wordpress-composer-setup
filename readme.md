@@ -15,7 +15,7 @@ To Setup a WordPress installation including wp-config.php, add the following to 
 ```
 "require": {
 	"johnpbloch/wordpress": "4.9.5",
-	"giofreitas/wordpress-composer-setup": "dev-master"
+	"giofreitas/wordpress-composer-setup": "0.1"
 }
 ```
 You can manually set the site url in extra (do not define if you want it to be dynamic through all environments):

@@ -264,7 +264,7 @@ class WpConfig implements WpConfigInterface {
 	public function setHomeUrl($homeUrl){
 		// append schema if not already there
 		if(preg_match('/^https?:\/\//', $homeUrl) === 0)
-			$homeUrl = "http//$homeUrl";
+			$homeUrl = "http://$homeUrl";
 		$this->homeUrl = $homeUrl;
 	}
 

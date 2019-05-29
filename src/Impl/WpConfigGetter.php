@@ -1,7 +1,9 @@
 <?php
 namespace Gio\WordPress\Setup\Impl;
 
-use Gio\WordPress\Setup\Plugin;
+use Composer\IO\IOInterface;
+
+use Gio\WordPress\Setup\ComposerFile;
 use Gio\WordPress\Setup\WpConfigGetter as WpConfigGetterInterface;
 use Gio\WordPress\Setup\WpConfig;
 
@@ -11,11 +13,17 @@ use Gio\WordPress\Setup\WpConfig;
  */
 class WpConfigGetter implements WpConfigGetterInterface {
 
+
+    /**
+     * @var IOInterface
+     */
+    private $io;
+
 	/**
 	 *
-	 * @var Plugin
+	 * @var ComposerFile
 	 */
-	private $plugin;
+	private $composeFile;
 
 	/**
 	 *
@@ -23,13 +31,16 @@ class WpConfigGetter implements WpConfigGetterInterface {
 	 */
 	private $wpConfig;
 
-	/**
-	 *
-	 * @var Plugin $plugin
-	 * @var WpConfig $wpConfig
-	 */
-	public function __construct(Plugin $plugin, WpConfig $wpConfig){
-		$this->plugin = $plugin;
+    /**
+     *
+     *
+     * @param IOInterface $io
+     * @var ComposerFile $plugin
+     * @var WpConfig $wpConfig
+     */
+	public function __construct(IOInterface $io, ComposerFile $composeFile, WpConfig $wpConfig){
+	    $this->io = $io;
+		$this->composeFile = $composeFile;
 		$this->wpConfig = $wpConfig;
 	}
 
@@ -55,14 +66,13 @@ class WpConfigGetter implements WpConfigGetterInterface {
 	 * @return array
 	 */
 	private function getDatabaseDetails(){
-		$io = $this->plugin->getIO();
 		// ask for database details.
 		$dbDetails = array(
-			'DB_NAME'		=> $io->ask("In order to setup your WordPress environment, we need to create the config file now. So, let's start by entering the database connection details.\nDatabase Name [wordpress]: ", "wordpress"),
-			'DB_USER'		=> $io->ask("Username [root]: ", "root"),
-			'DB_PASSWORD'	=> $io->ask("Password: "),
-			'DB_HOST' 		=> $io->ask("Database Host [localhost]: ", "localhost"),
-			'TABLE_PREFIX'	=> $io->ask("Table prefix [wp_]: ", "wp_")
+			'DB_NAME'		=> $this->io->ask("In order to setup your WordPress environment, we need to create the config file now. So, let's start by entering the database connection details.\nDatabase Name [wordpress]: ", "wordpress"),
+			'DB_USER'		=> $this->io->ask("Username [root]: ", "root"),
+			'DB_PASSWORD'	=> $this->io->ask("Password: "),
+			'DB_HOST' 		=> $this->io->ask("Database Host [localhost]: ", "localhost"),
+			'TABLE_PREFIX'	=> $this->io->ask("Table prefix [wp_]: ", "wp_")
 		);
 		// check connection with the inserted details.
 		try{
@@ -70,7 +80,7 @@ class WpConfigGetter implements WpConfigGetterInterface {
 		}
 		// if connection fails print a warning with error message
 		catch(\Exception $exception){
-			$io->writeError("<warning>Warning: Could not connect to the database '{$exception->getMessage()}'.</warning>");
+			$this->io->writeError("<warning>Warning: Could not connect to the database '{$exception->getMessage()}'.</warning>");
 		}
 		return $dbDetails;
 	}
@@ -108,11 +118,11 @@ class WpConfigGetter implements WpConfigGetterInterface {
 	 */
 	public function getWpConfig(){
 
-		$wpCoreDir = $this->plugin->getWpCoreDir();
-		$wpContentDir = $this->plugin->getWpContentDir();
-		$pluginDir = $this->plugin->getPluginsDir();
-		$muPluginsDir = $this->plugin->getMuPluginsDir();
-		$vendorDir = $this->plugin->getVendorDir();
+		$wpCoreDir = $this->composeFile->getWpCoreDir();
+		$wpContentDir = $this->composeFile->getWpContentDir();
+		$pluginDir = $this->composeFile->getPluginsDir();
+		$muPluginsDir = $this->composeFile->getMuPluginsDir();
+		$vendorDir = $this->composeFile->getVendorDir();
 		// make sure content files does not live inside forbidden folder
 		if ($wpContentDir === $wpCoreDir)
 			throw new \Exception("Invalid content dir '$wpContentDir'. It can not be the same directory as the Wordpress core");
@@ -129,7 +139,7 @@ class WpConfigGetter implements WpConfigGetterInterface {
 		$wpConfig->setPluginDir($pluginDir);
 		$wpConfig->setMuPluginDir($muPluginsDir);
 		// set home url if not empty
-		if($homeUrl = $this->plugin->getSiteUrl())
+		if($homeUrl = $this->composeFile->getSiteUrl())
 			$wpConfig->setHomeUrl($homeUrl);
 		// set Database details
 		$dbDetails = $this->getDatabaseDetails();

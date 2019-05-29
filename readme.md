@@ -33,7 +33,7 @@ We can also make use of some options from [johnpbloch/wordpress-core-installer](
 	"wordpress-install-dir": "wordpress"
 	"installer-paths": {
 	    "wp-content/themes/{$name}/": ["type:wordpress-theme"],
-	    "wp-content/plugins/{$name}/": ["type:wordpress-plugin"]
+	    "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
 	    "wp-content/mu-plugins/{$name}/": ["type:wordpress-muplugin"]
     }
 }

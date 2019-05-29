@@ -4,7 +4,7 @@ namespace Gio\WordPress\Setup\Impl;
 use Gio\WordPress\Setup\WpConfigFileGenerator as WpConfigFileGeneratorInterface;
 use Gio\WordPress\Setup\WpConfig;
 use Gio\WordPress\Setup\WpConfigSample;
-use Gio\WordPress\Setup\Plugin;
+use Gio\WordPress\Setup\ComposerFile;
 
 /**
  *
@@ -15,9 +15,9 @@ class WpConfigFileGenerator implements WpConfigFileGeneratorInterface{
 
 	/**
 	 *
-	 * @var Plugin
+	 * @var ComposerFile
 	 */
-	private $plugin;
+	private $composeFile;
 
 	/**
 	 * @var WpConfigSample
@@ -26,11 +26,11 @@ class WpConfigFileGenerator implements WpConfigFileGeneratorInterface{
 
 	/**
 	 *
-	 * @param Plugin $plugin
+	 * @param ComposerFile $composeFile
 	 * @param WpConfigSample $sample
 	 */
-	public function __construct(Plugin $plugin, WpConfigSample $sample) {
-		$this->plugin = $plugin;
+	public function __construct(ComposerFile $composeFile, WpConfigSample $sample) {
+		$this->composeFile = $composeFile;
 		$this->sample = $sample;
 	}
 
@@ -56,7 +56,7 @@ class WpConfigFileGenerator implements WpConfigFileGeneratorInterface{
 		$muPluginDir = $wpConfig->getMuPluginDir();
 		$homeUrl = $this->getHomeUrl($wpConfig);
 		$rootDir = $this->getRootDir($wpCoreDir);
-		$vendorDir = $this->plugin->getVendorDir();
+		$vendorDir = $this->composeFile->getVendorDir();
 
 		$sample
 			// Database definitions

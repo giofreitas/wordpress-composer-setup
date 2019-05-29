@@ -1,7 +1,7 @@
 <?php
 namespace Gio\WordPress\Setup\Impl;
 
-use Gio\WordPress\Setup\Plugin;
+use Gio\WordPress\Setup\ComposerFile;
 use Gio\WordPress\Setup\WpConfig;
 use Gio\WordPress\Setup\WpConfigManager as WpConfigManagerInterface;
 use Gio\WordPress\Setup\WpConfigParser;
@@ -15,9 +15,9 @@ class WpConfigManager implements WpConfigManagerInterface {
 
 	/**
 	 *
-	 * @var Plugin
+	 * @var ComposerFile
 	 */
-	private $plugin;
+	private $composeFile;
 
 	/**
 	 *
@@ -39,13 +39,13 @@ class WpConfigManager implements WpConfigManagerInterface {
 
 	/**
 	 *
-	 * @param Plugin $plugin
+	 * @param ComposerFile $composeFile
 	 * @param WpConfigParser $parser
 	 * @param WpConfigFileGenerator $generator
 	 * @param WpConfigGetter $getter
 	 */
-	public function __construct(Plugin $plugin, WpConfigParser $parser, WpConfigFileGenerator $generator, WpConfigGetter $getter) {
-		$this->plugin = $plugin;
+	public function __construct(ComposerFile $composeFile, WpConfigParser $parser, WpConfigFileGenerator $generator, WpConfigGetter $getter) {
+		$this->composeFile = $composeFile;
 		$this->parser = $parser;
 		$this->generator = $generator;
 		$this->getter = $getter;
@@ -56,7 +56,7 @@ class WpConfigManager implements WpConfigManagerInterface {
 	 * @return string|false
 	 */
 	private function getWpConfigPath(){
-		$wpCoreDir = $this->plugin->getWpCoreDir();
+		$wpCoreDir = $this->composeFile->getWpCoreDir();
 		// Check if wp-config.php file lives in core folder. It is not supposed to be here but if it is, it will be
 		// the one loaded by WordPress
 		if(file_exists($wpConfigPath = $wpCoreDir. '/wp-config.php'))
